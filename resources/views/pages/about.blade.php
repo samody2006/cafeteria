@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'About — Chef & Table')
+@section('title', 'About — God\'s Own Cafeteria')
 @section('meta_description', 'The story, philosophy, and journey of the chef behind every dish.')
 
 @push('styles')
@@ -163,6 +163,64 @@
         color: #5a5048;
     }
 
+    .about-card {
+        background: #fff;
+        border: 1px solid rgba(184,148,58,0.2);
+        box-shadow: 0 18px 48px rgba(0,0,0,0.05);
+        padding: 2.25rem;
+        border-radius: 8px;
+    }
+    .about-card h3 {
+        font-size: 1.6rem;
+        margin-bottom: 0.6rem;
+    }
+    .about-card p {
+        color: #4a4038;
+        line-height: 1.8;
+    }
+    .contact-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 1rem;
+        margin-top: 1.5rem;
+    }
+    .contact-tile {
+        border: 1px solid rgba(184,148,58,0.25);
+        padding: 1rem 1.25rem;
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+    }
+    .contact-icon {
+        width: 36px; height: 36px;
+        border-radius: 50%;
+        background: rgba(184,148,58,0.14);
+        display: grid;
+        place-items: center;
+        font-size: 0.95rem;
+    }
+    .contact-link { color: var(--ink); text-decoration: none; }
+    .contact-link:hover { color: var(--gold); }
+
+    .social-row {
+        display: flex;
+        justify-content: center;
+        gap: 0.75rem;
+        margin-top: 0.75rem;
+    }
+    .social-chip {
+        width: 36px; height: 36px;
+        border: 1px solid rgba(184,148,58,0.4);
+        border-radius: 999px;
+        display: grid;
+        place-items: center;
+        color: var(--ink);
+        background: rgba(184,148,58,0.12);
+        text-decoration: none;
+        font-size: 0.8rem;
+    }
+    .social-chip:hover { background: var(--gold); color: #fff; }
+
     /* ── Philosophy ──────────────────────────────────────────── */
     .philosophy {
         background: var(--ink);
@@ -285,11 +343,18 @@
     <div class="bio-section">
         <div class="bio-portrait-wrap">
             <img
-                src="{{ asset('images/chef-portrait-full.jpg') }}"
+                src="{{ asset('storage/images/chef-portrait-full.jpeg') }}"
                 alt="Chef portrait"
                 class="bio-portrait"
             >
             <p class="bio-portrait-caption">Chef & Author</p>
+            <div class="social-row">
+                <a class="social-chip" href="mailto:{{ optional($contact)->email ?? 'Eastheromoh@gmail.com' }}" aria-label="Email">✉️</a>
+                <a class="social-chip" href="tel:{{ optional($contact)->phone_primary ?? '07083415288' }}" aria-label="Call">📞</a>
+                @if($contact?->instagram_url)<a class="social-chip" href="{{ $contact->instagram_url }}" target="_blank" aria-label="Instagram">IG</a>@endif
+                @if($contact?->facebook_url)<a class="social-chip" href="{{ $contact->facebook_url }}" target="_blank" aria-label="Facebook">Fb</a>@endif
+                @if($contact?->twitter_url)<a class="social-chip" href="{{ $contact->twitter_url }}" target="_blank" aria-label="Twitter">X</a>@endif
+            </div>
         </div>
 
         <div class="bio-text">
@@ -338,10 +403,40 @@
                 </li>
                 <li class="milestone-item">
                     <span class="milestone-year">2022</span>
-                    <span class="milestone-desc">Launched Chef & Table to share recipes and culinary stories online.</span>
+                    <span class="milestone-desc">Launched God's Own Cafeteria to share recipes and culinary stories online.</span>
                 </li>
             </ul>
             @endif
+        </div>
+    </div>
+
+    {{-- ── Who We Are / Contact Snapshot ─────────────────────── --}}
+    <div style="padding: 0 6vw 5rem;">
+        <div class="about-card">
+            <h3>Who we are and what we offer</h3>
+            <p style="margin-bottom:1rem;">
+                God's Own cafeteria is more than just a place to order and book for your parties. The cafeteria is known for its diverse menu offering a mix of local and international recipes. We offer recipes, diet menus, we plan events, takeaway food and soups. We deliver cakes, pizza, snacks, food and soups, smoothie, BBQ.
+            </p>
+
+            <div class="contact-grid">
+                <div class="contact-tile">
+                    <span class="contact-icon">📞</span>
+                    <div>
+                        <a class="contact-link" href="tel:{{ optional($contact)->phone_primary ?? '07083415288' }}">{{ optional($contact)->phone_primary ?? '07083415288' }}</a><br>
+                        <a class="contact-link" href="tel:{{ optional($contact)->phone_secondary ?? '08052113225' }}">{{ optional($contact)->phone_secondary ?? '08052113225' }}</a>
+                    </div>
+                </div>
+                <div class="contact-tile">
+                    <span class="contact-icon">✉️</span>
+                    <a class="contact-link" href="mailto:{{ optional($contact)->email ?? 'Eastheromoh@gmail.com' }}">{{ optional($contact)->email ?? 'Eastheromoh@gmail.com' }}</a>
+                </div>
+                @if($contact?->address)
+                <div class="contact-tile">
+                    <span class="contact-icon">📍</span>
+                    <span>{{ $contact->address }}</span>
+                </div>
+                @endif
+            </div>
         </div>
     </div>
 

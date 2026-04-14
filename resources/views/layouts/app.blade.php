@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', config('app.name', 'Chef'))</title>
-    <meta name="description" content="@yield('meta_description', 'Artisanal recipes, culinary stories, and fine dining by Chef.')">
+    <title>@yield('title', config('app.name', 'God\'s Own Cafeteria'))</title>
+    <meta name="description" content="@yield('meta_description', 'Artisanal recipes, culinary stories, and fine dining by God\'s Own Cafeteria.')">
 
     {{-- Fonts --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -222,7 +222,7 @@
     {{-- Navigation --}}
     <header class="site-nav">
         <a href="{{ route('home') }}" class="nav-logo">
-            Chef <span>&</span> Table
+            God's Own <span>Cafeteria</span>
         </a>
 
         <ul class="nav-links" id="navLinks">
@@ -230,6 +230,7 @@
             <li><a href="{{ route('recipes.index') }}" class="{{ request()->routeIs('recipes.*') ? 'active' : '' }}">Recipes</a></li>
             <li><a href="{{ route('gallery') }}" class="{{ request()->routeIs('gallery') ? 'active' : '' }}">Gallery</a></li>
             <li><a href="{{ route('about') }}" class="{{ request()->routeIs('about') ? 'active' : '' }}">About</a></li>
+            <li><a href="{{ route('contact') }}" class="{{ request()->routeIs('contact') ? 'active' : '' }}">Contact</a></li>
         </ul>
 
         <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
@@ -249,15 +250,16 @@
     </main>
 
     <footer class="site-footer">
-        <div class="footer-logo">Chef & Table</div>
+        <div class="footer-logo">God's Own Cafeteria</div>
         <div class="footer-divider"></div>
         <nav>
             <a href="{{ route('home') }}">Home</a>
             <a href="{{ route('recipes.index') }}">Recipes</a>
             <a href="{{ route('gallery') }}">Gallery</a>
             <a href="{{ route('about') }}">About</a>
+            <a href="{{ route('contact') }}">Contact</a>
         </nav>
-        <p class="copyright">&copy; {{ date('Y') }} Chef & Table. All rights reserved.</p>
+        <p class="copyright">&copy; {{ date('Y') }} God's Own Cafeteria. All rights reserved.</p>
     </footer>
 
     <script>

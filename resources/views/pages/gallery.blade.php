@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Gallery — Chef & Table')
+@section('title', 'Gallery — God\'s Own Cafeteria')
 @section('meta_description', 'Behind-the-scenes photography from culinary events, dinners, and the kitchen.')
 
 @push('styles')
@@ -207,7 +207,7 @@
     {{-- ── Page Hero ─────────────────────────────────────────────── --}}
     <div class="gallery-hero">
         <div>
-            <p class="eyebrow">✦ Chef & Table</p>
+            <p class="eyebrow">✦ God's Own Cafeteria</p>
             <h1>The <em>Gallery</em></h1>
         </div>
         <p>

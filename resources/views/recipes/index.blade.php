@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Recipes — Chef & Table')
+@section('title', 'Recipes — God\'s Own Cafeteria')
 @section('meta_description', 'Browse all recipes — handcrafted step-by-step guides from the kitchen.')
 
 @push('styles')
@@ -197,7 +197,7 @@
     {{-- ── Page Header ─────────────────────────────────────────── --}}
     <div class="page-header">
         <div>
-            <p class="eyebrow">✦ Chef & Table</p>
+            <p class="eyebrow">✦ God's Own Cafeteria</p>
             <h1>All <em>Recipes</em></h1>
         </div>
         <p style="font-size:0.85rem;color:#9a8e84;max-width:360px;line-height:1.7;">

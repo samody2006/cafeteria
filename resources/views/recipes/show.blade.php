@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', $recipe->title . ' — Chef & Table')
+@section('title', $recipe->title . ' — God\'s Own Cafeteria')
 @section('meta_description', $recipe->description ?? $recipe->title)
 
 @push('styles')
@@ -241,7 +241,7 @@
             <p class="recipe-hero-meta">
                 {{ $recipe->created_at->format('d M Y') }}
                 <span>|</span>
-                Chef & Table
+                God's Own Cafeteria
             </p>
         </div>
     </div>

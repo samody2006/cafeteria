@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'Chef & Table — Artisanal Recipes & Culinary Art')
-@section('meta_description', 'Discover handcrafted recipes, culinary stories, and fine dining experiences by Chef.')
+@section('title', 'God\'s Own Cafeteria — Artisanal Recipes & Culinary Art')
+@section('meta_description', 'Discover handcrafted recipes, culinary stories, and fine dining experiences by God\'s Own Cafeteria.')
 
 @push('styles')
 <style>
@@ -486,13 +486,13 @@
         <p class="pull-quote">
             Cooking is not just feeding the body — it is an act of love, of memory, of pure human expression.
         </p>
-        <p class="quote-author">— Chef & Table</p>
+        <p class="quote-author">— God's Own Cafeteria</p>
     </div>
 
     {{-- ── Bio Teaser ───────────────────────────────────────── --}}
     <div class="bio-teaser">
         <div class="bio-image">
-            <img src="{{ asset('images/chef-portrait.jpg') }}" alt="Chef portrait" loading="lazy">
+            <img src="{{ asset('storage/images/chef-portrait-full.jpeg') }}" alt="Chef portrait" loading="lazy">
             <div class="bio-image-overlay"></div>
         </div>
         <div class="bio-text">
