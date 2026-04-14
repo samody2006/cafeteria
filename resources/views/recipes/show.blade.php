@@ -9,7 +9,7 @@
     .recipe-hero {
         position: relative;
         height: 65vh;
-        min-height: 480px;
+        min-height: 500px;
         overflow: hidden;
     }
 
@@ -17,15 +17,21 @@
         width: 100%; height: 100%;
         object-fit: cover;
         object-position: center;
+        animation: heroZoom 8s ease forwards;
+    }
+
+    @keyframes heroZoom {
+        from { transform: scale(1.05); }
+        to { transform: scale(1); }
     }
 
     .recipe-hero-overlay {
         position: absolute;
         inset: 0;
         background: linear-gradient(
-            to top,
-            rgba(26,22,18,0.9) 0%,
-            rgba(26,22,18,0.3) 50%,
+            135deg,
+            rgba(26,22,18,0.95) 0%,
+            rgba(26,22,18,0.4) 50%,
             transparent 100%
         );
     }
@@ -33,41 +39,44 @@
     .recipe-hero-content {
         position: absolute;
         bottom: 0; left: 0; right: 0;
-        padding: 4rem 6vw 3.5rem;
-        max-width: 860px;
-        animation: fadeUp 0.8s ease forwards;
+        padding: 5rem 6vw 4rem;
+        max-width: 900px;
+        animation: fadeUp 1.2s 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        opacity: 0;
     }
 
     @keyframes fadeUp {
-        from { opacity: 0; transform: translateY(16px); }
+        from { opacity: 0; transform: translateY(40px); }
         to   { opacity: 1; transform: translateY(0); }
     }
 
     .recipe-breadcrumb {
         font-size: 0.65rem;
-        letter-spacing: 0.22em;
+        letter-spacing: 0.25em;
         text-transform: uppercase;
         color: var(--gold);
-        margin-bottom: 1rem;
+        margin-bottom: 1.2rem;
         text-decoration: none;
+        font-weight: 500;
     }
 
     .recipe-hero-title {
-        font-size: clamp(2.5rem, 6vw, 5rem);
-        font-weight: 300;
-        line-height: 1.05;
+        font-size: clamp(2.8rem, 6.5vw, 5.5rem);
+        font-weight: 400;
+        line-height: 1.08;
         color: var(--cream);
-        margin-bottom: 1rem;
+        margin-bottom: 1.2rem;
+        letter-spacing: -0.01em;
     }
 
     .recipe-hero-meta {
         font-size: 0.72rem;
-        letter-spacing: 0.15em;
-        color: rgba(245,240,232,0.55);
+        letter-spacing: 0.18em;
+        color: rgba(245,240,232,0.65);
         text-transform: uppercase;
     }
 
-    .recipe-hero-meta span { color: rgba(245,240,232,0.3); margin: 0 0.5rem; }
+    .recipe-hero-meta span { color: rgba(245,240,232,0.4); margin: 0 0.6rem; }
 
     /* ── Layout ──────────────────────────────────────────────── */
     .recipe-layout {

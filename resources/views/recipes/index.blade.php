@@ -7,7 +7,7 @@
 <style>
     /* ── Page Header ─────────────────────────────────────────── */
     .page-header {
-        padding: 5rem 6vw 3rem;
+        padding: 6rem 6vw 4rem;
         border-bottom: 1px solid rgba(184,148,58,0.15);
         display: flex;
         align-items: flex-end;
@@ -16,42 +16,69 @@
         flex-wrap: wrap;
     }
 
+    .page-header .header-left h1 {
+        font-size: clamp(2.8rem, 5.5vw, 4.5rem);
+        line-height: 1.05;
+        margin-bottom: 0.5rem;
+    }
+
     .page-header .eyebrow {
         font-size: 0.65rem;
         letter-spacing: 0.28em;
         text-transform: uppercase;
         color: var(--gold);
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.6rem;
+        font-weight: 500;
     }
 
-    .page-header h1 {
-        font-size: clamp(2.5rem, 5vw, 4rem);
-        line-height: 1;
+    .page-header h1 em { font-style: italic; color: var(--gold); font-weight: 300; }
+
+    .page-header .header-right {
+        display: flex;
+        align-items: flex-end;
+        gap: 1.5rem;
+        flex-wrap: wrap;
     }
 
-    .page-header h1 em { font-style: italic; }
+    .page-header p {
+        max-width: 320px;
+        font-size: 0.9rem;
+        line-height: 1.75;
+        color: #7a6f67;
+    }
 
     /* ── Filter Bar ──────────────────────────────────────────── */
     .filter-bar {
-        padding: 1.5rem 6vw;
+        padding: 1.8rem 6vw;
         display: flex;
-        gap: 0.5rem;
+        gap: 0.75rem;
         flex-wrap: wrap;
-        border-bottom: 1px solid rgba(184,148,58,0.1);
-        background: var(--warm);
+        border-bottom: 1px solid rgba(184,148,58,0.12);
+        background: linear-gradient(to right, var(--cream) 0%, rgba(232,220,200,0.5) 100%);
+        align-items: center;
+    }
+
+    .filter-bar-label {
+        font-size: 0.7rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: #8b7355;
+        margin-right: 0.5rem;
+        font-weight: 500;
     }
 
     .filter-btn {
-        padding: 0.35rem 1rem;
-        border: 1px solid rgba(26,22,18,0.2);
-        font-size: 0.68rem;
-        letter-spacing: 0.18em;
+        padding: 0.55rem 1.3rem;
+        border: 1.5px solid rgba(26,22,18,0.3);
+        font-size: 0.7rem;
+        letter-spacing: 0.15em;
         text-transform: uppercase;
-        background: transparent;
-        cursor: pointer;
+        background: rgba(255, 255, 255, 0.8);
         color: var(--ink);
-        text-decoration: none;
-        transition: all 0.2s;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        font-weight: 500;
+        border-radius: 3px;
     }
 
     .filter-btn:hover,
@@ -59,6 +86,8 @@
         background: var(--ink);
         color: var(--cream);
         border-color: var(--ink);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(26,22,18,0.12);
     }
 
     /* ── Recipe Grid ─────────────────────────────────────────── */
@@ -68,58 +97,73 @@
 
     .recipes-listing-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-        gap: 3rem 2.5rem;
+        grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+        gap: 3rem 2rem;
     }
 
     /* Individual card */
     .recipe-list-card {
         cursor: pointer;
+        transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .recipe-list-card:hover {
+        transform: translateY(-6px);
     }
 
     .recipe-list-card-img-wrap {
         position: relative;
         overflow: hidden;
-        aspect-ratio: 4/3;
-        margin-bottom: 1.25rem;
+        aspect-ratio: 1.2/1;
+        margin-bottom: 1.5rem;
+        border-radius: 4px;
+        background: rgba(184,148,58,0.08);
     }
 
     .recipe-list-card-img {
         width: 100%; height: 100%;
         object-fit: cover;
-        transition: transform 0.6s ease;
+        transition: transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s;
+        opacity: 1;
     }
 
     .recipe-list-card:hover .recipe-list-card-img {
-        transform: scale(1.05);
+        transform: scale(1.08) rotate(1deg);
+        opacity: 0.9;
     }
 
     .recipe-list-card-tag {
         position: absolute;
-        top: 1rem;
-        left: 1rem;
-        background: var(--ink);
+        top: 1.2rem;
+        left: 1.2rem;
+        background: rgba(26,22,18,0.92);
         color: var(--gold);
         font-size: 0.6rem;
-        letter-spacing: 0.2em;
+        letter-spacing: 0.22em;
         text-transform: uppercase;
-        padding: 0.3rem 0.75rem;
+        padding: 0.4rem 0.9rem;
+        border-radius: 2px;
+        font-weight: 600;
     }
 
     .recipe-list-card h2 {
-        font-size: 1.55rem;
-        line-height: 1.2;
-        margin-bottom: 0.5rem;
-        transition: color 0.2s;
+        font-size: 1.6rem;
+        font-family: 'Cormorant Garamond', serif;
+        line-height: 1.25;
+        margin-bottom: 0.6rem;
+        transition: color 0.3s ease;
+        color: var(--ink);
     }
 
-    .recipe-list-card:hover h2 { color: var(--gold); }
+    .recipe-list-card:hover h2 {
+        color: var(--gold);
+    }
 
     .recipe-list-card p {
-        font-size: 0.85rem;
-        line-height: 1.75;
-        color: #6b6055;
-        margin-bottom: 1rem;
+        font-size: 0.87rem;
+        line-height: 1.7;
+        color: #7a6f67;
+        margin-bottom: 1.2rem;
         display: -webkit-box;
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
@@ -130,11 +174,11 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        font-size: 0.68rem;
-        letter-spacing: 0.1em;
-        color: #9a8e84;
-        border-top: 1px solid rgba(184,148,58,0.15);
-        padding-top: 0.85rem;
+        font-size: 0.7rem;
+        letter-spacing: 0.12em;
+        color: #a89a8f;
+        border-top: 1.5px solid rgba(184,148,58,0.18);
+        padding-top: 1rem;
     }
 
     .recipe-list-card-link {
@@ -221,8 +265,9 @@
                 <a href="{{ route('recipes.show', $recipe->slug) }}" class="recipe-list-card-link">
                     <article class="recipe-list-card">
                         <div class="recipe-list-card-img-wrap">
+                            @php $cover = $recipe->coverImagePath(); @endphp
                             <img
-                                src="{{ $recipe->image ? asset('storage/' . $recipe->image) : asset('images/placeholder.jpg') }}"
+                                src="{{ $cover ? asset('storage/' . $cover) : asset('images/placeholder.jpg') }}"
                                 alt="{{ $recipe->title }}"
                                 class="recipe-list-card-img"
                                 loading="lazy"

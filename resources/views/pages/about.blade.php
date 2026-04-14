@@ -9,7 +9,7 @@
     .about-hero {
         position: relative;
         height: 55vh;
-        min-height: 400px;
+        min-height: 420px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -23,47 +23,59 @@
         background-image: url('{{ asset("images/about-hero.jpg") }}');
         background-size: cover;
         background-position: center 30%;
+        animation: zoomIn 12s ease forwards;
+    }
+
+    @keyframes zoomIn {
+        from { transform: scale(1.02); }
+        to { transform: scale(1); }
     }
 
     .about-hero-overlay {
         position: absolute;
         inset: 0;
-        background: rgba(26,22,18,0.62);
+        background: linear-gradient(135deg, rgba(26,22,18,0.75), rgba(26,22,18,0.4));
     }
 
     .about-hero-content {
         position: relative;
         z-index: 2;
         color: var(--cream);
-        animation: fadeUp 0.9s ease forwards;
+        animation: fadeUp 1.2s 0.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        opacity: 0;
+        max-width: 900px;
+        padding: 0 6vw;
     }
 
     @keyframes fadeUp {
-        from { opacity: 0; transform: translateY(20px); }
+        from { opacity: 0; transform: translateY(40px); }
         to   { opacity: 1; transform: translateY(0); }
     }
 
     .about-hero-content .eyebrow {
         font-size: 0.65rem;
-        letter-spacing: 0.3em;
+        letter-spacing: 0.35em;
         text-transform: uppercase;
         color: var(--gold);
-        margin-bottom: 1rem;
+        margin-bottom: 1.2rem;
+        font-weight: 500;
     }
 
     .about-hero-content h1 {
-        font-size: clamp(3rem, 7vw, 5.5rem);
-        font-weight: 300;
-        line-height: 1.05;
+        font-size: clamp(3.2rem, 7.5vw, 5.8rem);
+        font-weight: 400;
+        line-height: 1.1;
+        margin-bottom: 0.8rem;
+        letter-spacing: -0.02em;
     }
 
-    .about-hero-content h1 em { font-style: italic; color: var(--gold); }
+    .about-hero-content h1 em { font-style: italic; color: var(--gold); font-weight: 300; }
 
     /* ── Bio Section ─────────────────────────────────────────── */
     .bio-section {
         display: grid;
         grid-template-columns: 380px 1fr;
-        gap: 6rem;
+        gap: 7rem;
         padding: 7rem 6vw;
         align-items: start;
     }
@@ -74,7 +86,7 @@
 
     .bio-portrait-wrap {
         position: sticky;
-        top: 88px;
+        top: 100px;
     }
 
     .bio-portrait {
@@ -83,21 +95,24 @@
         object-fit: cover;
         object-position: top center;
         display: block;
+        border-radius: 4px;
+        box-shadow: 0 12px 40px rgba(0,0,0,0.12);
     }
 
     .bio-portrait-caption {
-        margin-top: 1rem;
-        font-size: 0.7rem;
-        letter-spacing: 0.15em;
+        margin-top: 1.2rem;
+        font-size: 0.68rem;
+        letter-spacing: 0.2em;
         text-transform: uppercase;
         color: var(--gold);
         text-align: center;
+        font-weight: 500;
     }
 
     .bio-portrait-caption::before,
     .bio-portrait-caption::after {
         content: ' — ';
-        color: rgba(184,148,58,0.4);
+        color: rgba(184,148,58,0.3);
     }
 
     /* Bio text */
@@ -442,6 +457,7 @@
 
     {{-- ── Philosophy ──────────────────────────────────────────── --}}
     <div class="philosophy">
+        <img src="{{ asset('images/logo.png') }}" alt="Logo" class="h-16 w-auto mx-auto mb-10 brightness-0 invert opacity-40">
         <p class="eyebrow">✦ How I Cook</p>
         <h2>My Culinary <em>Philosophy</em></h2>
 

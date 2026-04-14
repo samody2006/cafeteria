@@ -7,7 +7,7 @@
 <style>
     /* ── Gallery Hero ─────────────────────────────────────────── */
     .gallery-hero {
-        padding: 6rem 6vw 3rem;
+        padding: 6rem 6vw 4rem;
         display: flex;
         align-items: flex-end;
         justify-content: space-between;
@@ -21,31 +21,33 @@
         letter-spacing: 0.28em;
         text-transform: uppercase;
         color: var(--gold);
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.6rem;
+        font-weight: 500;
     }
 
     .gallery-hero h1 {
-        font-size: clamp(2.5rem, 5vw, 4.5rem);
-        line-height: 1;
+        font-size: clamp(2.8rem, 5vw, 4.5rem);
+        line-height: 1.05;
+        margin-bottom: 0.3rem;
     }
 
-    .gallery-hero h1 em { font-style: italic; }
+    .gallery-hero h1 em { font-style: italic; color: var(--gold); font-weight: 300; }
 
     .gallery-hero p {
         max-width: 360px;
-        font-size: 0.88rem;
+        font-size: 0.92rem;
         line-height: 1.8;
-        color: #6b6055;
+        color: #7a6f67;
     }
 
     /* ── Masonry Grid ─────────────────────────────────────────── */
     .gallery-section {
-        padding: 4rem 6vw 6rem;
+        padding: 5rem 6vw 6rem;
     }
 
     .masonry-grid {
         columns: 3;
-        column-gap: 3px;
+        column-gap: 2rem;
     }
 
     @media (max-width: 900px) { .masonry-grid { columns: 2; } }
@@ -53,47 +55,56 @@
 
     .masonry-item {
         break-inside: avoid;
-        margin-bottom: 3px;
+        margin-bottom: 2.5rem;
         position: relative;
         overflow: hidden;
         cursor: pointer;
         display: block;
+        border-radius: 4px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+        transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .masonry-item:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 16px 40px rgba(0,0,0,0.12);
     }
 
     .masonry-item img {
         width: 100%;
         display: block;
-        transition: transform 0.6s ease;
-        filter: saturate(0.85);
+        transition: transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.4s;
+        filter: saturate(0.9);
     }
 
     .masonry-item:hover img {
-        transform: scale(1.04);
-        filter: saturate(1.1);
+        transform: scale(1.06) rotate(0.5deg);
+        filter: saturate(1.15);
     }
 
     .masonry-overlay {
         position: absolute;
         inset: 0;
         background: rgba(26,22,18,0);
-        transition: background 0.4s;
+        transition: background 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         display: flex;
         align-items: flex-end;
-        padding: 1.5rem;
+        padding: 1.8rem;
     }
 
     .masonry-item:hover .masonry-overlay {
-        background: rgba(26,22,18,0.45);
+        background: rgba(26,22,18,0.55);
     }
 
     .masonry-caption {
         font-family: 'Cormorant Garamond', serif;
-        font-size: 1.1rem;
+        font-size: 1.25rem;
         font-style: italic;
         color: var(--cream);
         opacity: 0;
-        transform: translateY(8px);
-        transition: opacity 0.3s 0.05s, transform 0.3s 0.05s;
+        transform: translateY(12px);
+        transition: opacity 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.05s, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.05s;
+        font-weight: 300;
     }
 
     .masonry-item:hover .masonry-caption {

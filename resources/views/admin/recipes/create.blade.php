@@ -1,273 +1,126 @@
-@extends('layouts.app')
-
-@section('title', 'Create Recipe — Admin')
-
-@push('styles')
-<style>
-    .form-wrapper {
-        max-width: 820px;
-        margin: 0 auto;
-        padding: 4rem 2rem 6rem;
-    }
-
-    .form-header {
-        margin-bottom: 3rem;
-        padding-bottom: 1.5rem;
-        border-bottom: 1px solid rgba(184,148,58,0.2);
-    }
-
-    .form-header .eyebrow {
-        font-size: 0.65rem;
-        letter-spacing: 0.28em;
-        text-transform: uppercase;
-        color: var(--gold);
-        margin-bottom: 0.4rem;
-    }
-
-    .form-header h1 { font-size: 2.5rem; }
-
-    /* Field groups */
-    .field-group {
-        margin-bottom: 2rem;
-    }
-
-    .field-label {
-        display: block;
-        font-size: 0.65rem;
-        letter-spacing: 0.22em;
-        text-transform: uppercase;
-        color: var(--ink);
-        margin-bottom: 0.6rem;
-        font-weight: 400;
-    }
-
-    .field-label .required { color: var(--gold); margin-left: 2px; }
-
-    .field-input,
-    .field-textarea {
-        width: 100%;
-        background: transparent;
-        border: 1px solid rgba(26,22,18,0.25);
-        border-bottom-width: 2px;
-        padding: 0.75rem 1rem;
-        font-family: 'Jost', sans-serif;
-        font-size: 0.95rem;
-        font-weight: 300;
-        color: var(--ink);
-        outline: none;
-        transition: border-color 0.2s;
-        border-radius: 0;
-        -webkit-appearance: none;
-    }
-
-    .field-input:focus,
-    .field-textarea:focus {
-        border-color: var(--gold);
-    }
-
-    .field-textarea {
-        resize: vertical;
-        min-height: 140px;
-        line-height: 1.7;
-    }
-
-    .field-hint {
-        font-size: 0.75rem;
-        color: #9a8e84;
-        margin-top: 0.4rem;
-    }
-
-    .field-error {
-        font-size: 0.75rem;
-        color: var(--rust);
-        margin-top: 0.4rem;
-    }
-
-    /* Image preview */
-    .image-preview-wrap {
-        margin-top: 1rem;
-        position: relative;
-        display: inline-block;
-    }
-
-    .image-preview {
-        max-width: 280px;
-        max-height: 200px;
-        object-fit: cover;
-        display: block;
-        border: 1px solid rgba(184,148,58,0.2);
-    }
-
-    .image-preview-label {
-        font-size: 0.65rem;
-        letter-spacing: 0.15em;
-        color: #9a8e84;
-        text-transform: uppercase;
-        margin-bottom: 0.4rem;
-    }
-
-    /* Grid fields */
-    .fields-row {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 1.5rem;
-    }
-
-    @media (max-width: 600px) {
-        .fields-row { grid-template-columns: 1fr; }
-    }
-
-    /* Actions */
-    .form-actions {
-        display: flex;
-        gap: 1rem;
-        align-items: center;
-        padding-top: 2rem;
-        border-top: 1px solid rgba(184,148,58,0.15);
-        flex-wrap: wrap;
-    }
-</style>
-@endpush
-
-@section('content')
-
-    <div class="form-wrapper">
-        <div class="form-header">
-            <p class="eyebrow">✦ Admin</p>
-            <h1>Create Recipe</h1>
+<x-admin-layout>
+    <x-slot name="header">
+        <div class="flex items-center justify-between">
+            <div>
+                <h2 class="font-semibold text-xl text-gray-800 leading-tight">Create Recipe</h2>
+                <p class="text-sm text-gray-500">Add a new culinary masterpiece to your collection</p>
+            </div>
+            <a href="{{ route('admin.recipes.index') }}" class="text-amber-600 hover:text-amber-800 text-sm font-medium">
+                &larr; Back to Recipes
+            </a>
         </div>
+    </x-slot>
 
-        <form
-            action="{{ route('admin.recipes.store') }}"
-            method="POST"
-            enctype="multipart/form-data"
-            id="recipeForm"
-        >
-            @csrf
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-8 text-gray-900">
+                    <form action="{{ route('admin.recipes.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
+                        @csrf
 
-            {{-- Title --}}
-            <div class="field-group">
-                <label class="field-label" for="title">
-                    Recipe Title <span class="required">*</span>
-                </label>
-                <input
-                    type="text"
-                    id="title"
-                    name="title"
-                    class="field-input"
-                    value="{{ old('title') }}"
-                    placeholder="e.g. Slow-Braised Lamb Shoulder with Harissa"
-                    required
-                >
-                @error('title')
-                    <p class="field-error">{{ $message }}</p>
-                @enderror
-            </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Left Column -->
+                            <div class="space-y-6">
+                                <!-- Title -->
+                                <div>
+                                    <x-input-label for="title" value="Recipe Title" />
+                                    <x-text-input id="title" name="title" type="text" class="mt-1 block w-full" :value="old('title')" required placeholder="e.g. Slow-Braised Lamb Shoulder" />
+                                    <x-input-error class="mt-2" :messages="$errors->get('title')" />
+                                </div>
 
-            {{-- Description --}}
-            <div class="field-group">
-                <label class="field-label" for="description">
-                    Short Description
-                </label>
-                <textarea
-                    id="description"
-                    name="description"
-                    class="field-textarea"
-                    rows="3"
-                    placeholder="A brief, enticing introduction to this dish…"
-                >{{ old('description') }}</textarea>
-                <p class="field-hint">Shown on recipe cards and in search results.</p>
-                @error('description')
-                    <p class="field-error">{{ $message }}</p>
-                @enderror
-            </div>
+                                <!-- Description -->
+                                <div>
+                                    <x-input-label for="description" value="Short Description" />
+                                    <textarea id="description" name="description" rows="3" class="mt-1 block w-full border-gray-300 focus:border-amber-500 focus:ring-amber-500 rounded-md shadow-sm" placeholder="A brief introduction...">{{ old('description') }}</textarea>
+                                    <x-input-error class="mt-2" :messages="$errors->get('description')" />
+                                </div>
 
-            {{-- Ingredients --}}
-            <div class="field-group">
-                <label class="field-label" for="ingredients">
-                    Ingredients <span class="required">*</span>
-                </label>
-                <textarea
-                    id="ingredients"
-                    name="ingredients"
-                    class="field-textarea"
-                    rows="8"
-                    placeholder="One ingredient per line:&#10;500g lamb shoulder&#10;2 tbsp harissa paste&#10;1 preserved lemon…"
-                    required
-                >{{ old('ingredients') }}</textarea>
-                <p class="field-hint">One ingredient per line.</p>
-                @error('ingredients')
-                    <p class="field-error">{{ $message }}</p>
-                @enderror
-            </div>
+                                <!-- Ingredients -->
+                                <div>
+                                    <x-input-label for="ingredients" value="Ingredients" />
+                                    <textarea id="ingredients" name="ingredients" rows="10" class="mt-1 block w-full border-gray-300 focus:border-amber-500 focus:ring-amber-500 rounded-md shadow-sm" required placeholder="One ingredient per line...">{{ old('ingredients') }}</textarea>
+                                    <p class="mt-1 text-xs text-gray-500 font-jost">One ingredient per line.</p>
+                                    <x-input-error class="mt-2" :messages="$errors->get('ingredients')" />
+                                </div>
+                            </div>
 
-            {{-- Instructions --}}
-            <div class="field-group">
-                <label class="field-label" for="instructions">
-                    Instructions <span class="required">*</span>
-                </label>
-                <textarea
-                    id="instructions"
-                    name="instructions"
-                    class="field-textarea"
-                    rows="12"
-                    placeholder="One step per line:&#10;Preheat the oven to 160°C.&#10;Season the lamb generously with salt and pepper…"
-                    required
-                >{{ old('instructions') }}</textarea>
-                <p class="field-hint">One step per line — each line becomes a numbered instruction.</p>
-                @error('instructions')
-                    <p class="field-error">{{ $message }}</p>
-                @enderror
-            </div>
+                            <!-- Right Column -->
+                            <div class="space-y-6">
+                                <!-- Instructions -->
+                                <div>
+                                    <x-input-label for="instructions" value="Instructions" />
+                                    <textarea id="instructions" name="instructions" rows="10" class="mt-1 block w-full border-gray-300 focus:border-amber-500 focus:ring-amber-500 rounded-md shadow-sm" required placeholder="Step-by-step guide...">{{ old('instructions') }}</textarea>
+                                    <p class="mt-1 text-xs text-gray-500 font-jost">Each line will be treated as a step.</p>
+                                    <x-input-error class="mt-2" :messages="$errors->get('instructions')" />
+                                </div>
 
-            {{-- Image --}}
-            <div class="field-group">
-                <label class="field-label" for="image">
-                    Recipe Image
-                </label>
-                <input
-                    type="file"
-                    id="image"
-                    name="image"
-                    class="field-input"
-                    accept="image/jpeg,image/png,image/webp"
-                    onchange="previewImage(this)"
-                    style="padding: 0.5rem; cursor:pointer;"
-                >
-                <p class="field-hint">JPG, PNG or WebP. Max 2 MB. Landscape ratio (4:3 or 16:9) recommended.</p>
-                @error('image')
-                    <p class="field-error">{{ $message }}</p>
-                @enderror
+                                <!-- Main Image -->
+                                <div>
+                                    <x-input-label for="image" value="Feature Image" />
+                                    <div class="mt-1 flex items-center space-x-4">
+                                        <div id="image-preview-container" class="hidden shrink-0">
+                                            <img id="image-preview" src="#" alt="Preview" class="h-24 w-32 object-cover rounded-md border border-gray-200 shadow-sm">
+                                        </div>
+                                        <label class="block w-full">
+                                            <span class="sr-only">Choose feature image</span>
+                                            <input type="file" name="image" id="image" accept="image/*" onchange="previewFile(this, 'image-preview', 'image-preview-container')"
+                                                class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100 transition-colors cursor-pointer" />
+                                        </label>
+                                    </div>
+                                    <x-input-error class="mt-2" :messages="$errors->get('image')" />
+                                </div>
 
-                <div id="imagePreviewWrap" class="image-preview-wrap" style="display:none;">
-                    <p class="image-preview-label">Preview</p>
-                    <img id="imagePreview" class="image-preview" src="" alt="Preview">
+                                <!-- Gallery Images -->
+                                <div>
+                                    <x-input-label for="images" value="Gallery Images (Optional)" />
+                                    <input type="file" name="images[]" id="images" multiple accept="image/*"
+                                        class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-gray-50 file:text-gray-700 hover:file:bg-gray-100 transition-colors cursor-pointer" />
+                                    <p class="mt-1 text-xs text-gray-500 font-jost">You can select multiple images.</p>
+                                    <x-input-error class="mt-2" :messages="$errors->get('images.*')" />
+                                </div>
+
+                                <!-- Publication Status -->
+                                <div class="bg-amber-50 p-4 rounded-lg border border-amber-100">
+                                    <label class="flex items-center cursor-pointer">
+                                        <input type="checkbox" name="is_published" value="1" {{ old('is_published') ? 'checked' : '' }} class="form-checkbox h-5 w-5 text-amber-600 border-gray-300 rounded focus:ring-amber-500">
+                                        <div class="ml-3">
+                                            <span class="block text-sm font-bold text-amber-900 uppercase tracking-wider">Publish Recipe</span>
+                                            <span class="block text-xs text-amber-700 font-jost">Make this recipe visible on the website immediately.</span>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Form Actions -->
+                        <div class="flex items-center justify-end space-x-4 border-t border-gray-100 pt-6">
+                            <a href="{{ route('admin.recipes.index') }}" class="text-sm text-gray-600 hover:text-gray-900 font-medium px-4 py-2">
+                                Cancel
+                            </a>
+                            <x-primary-button class="bg-amber-600 hover:bg-amber-700 focus:bg-amber-700 active:bg-amber-800">
+                                Save Recipe
+                            </x-primary-button>
+                        </div>
+                    </form>
                 </div>
             </div>
-
-            {{-- Actions --}}
-            <div class="form-actions">
-                <button type="submit" class="btn-gold">Publish Recipe</button>
-                <a href="{{ route('admin.recipes.index') }}" class="btn-primary">Cancel</a>
-            </div>
-        </form>
+        </div>
     </div>
 
-@endsection
-
-@push('scripts')
-<script>
-    function previewImage(input) {
-        const wrap    = document.getElementById('imagePreviewWrap');
-        const preview = document.getElementById('imagePreview');
-        if (input.files && input.files[0]) {
-            const reader = new FileReader();
-            reader.onload = e => {
-                preview.src = e.target.result;
-                wrap.style.display = 'block';
-            };
-            reader.readAsDataURL(input.files[0]);
+    @push('scripts')
+    <script>
+        function previewFile(input, previewId, containerId) {
+            const preview = document.getElementById(previewId);
+            const container = document.getElementById(containerId);
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    container.classList.remove('hidden');
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
         }
-    }
-</script>
-@endpush
+    </script>
+    @endpush
+</x-admin-layout>

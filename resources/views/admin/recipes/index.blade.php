@@ -1,206 +1,103 @@
-@extends('layouts.app')
-
-@section('title', 'Admin — Manage Recipes')
-
-@push('styles')
-<style>
-    .admin-wrapper {
-        max-width: 1100px;
-        margin: 0 auto;
-        padding: 4rem 2rem 6rem;
-    }
-
-    .admin-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 3rem;
-        padding-bottom: 1.5rem;
-        border-bottom: 1px solid rgba(184,148,58,0.2);
-        flex-wrap: wrap;
-        gap: 1rem;
-    }
-
-    .admin-header h1 { font-size: 2.5rem; }
-
-    .admin-table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-
-    .admin-table thead tr {
-        border-bottom: 1px solid var(--ink);
-    }
-
-    .admin-table th {
-        text-align: left;
-        padding: 0.75rem 1rem;
-        font-size: 0.65rem;
-        letter-spacing: 0.22em;
-        text-transform: uppercase;
-        color: var(--gold);
-        font-weight: 400;
-    }
-
-    .admin-table td {
-        padding: 1rem 1rem;
-        font-size: 0.88rem;
-        border-bottom: 1px solid rgba(26,22,18,0.07);
-        vertical-align: middle;
-    }
-
-    .admin-table tbody tr:hover td {
-        background: rgba(184,148,58,0.04);
-    }
-
-    .admin-table .recipe-thumb {
-        width: 60px; height: 44px;
-        object-fit: cover;
-        display: block;
-        flex-shrink: 0;
-    }
-
-    .admin-table .title-cell {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-    }
-
-    .admin-table .recipe-title {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: 1.1rem;
-    }
-
-    .action-links {
-        display: flex;
-        gap: 0.75rem;
-        align-items: center;
-    }
-
-    .action-links a {
-        font-size: 0.68rem;
-        letter-spacing: 0.15em;
-        text-transform: uppercase;
-        color: var(--ink);
-        text-decoration: none;
-        border-bottom: 1px solid transparent;
-        transition: border-color 0.2s, color 0.2s;
-        padding-bottom: 1px;
-    }
-
-    .action-links a:hover { border-color: var(--gold); color: var(--gold); }
-
-    .action-links .delete-btn {
-        background: none;
-        border: none;
-        cursor: pointer;
-        font-size: 0.68rem;
-        letter-spacing: 0.15em;
-        text-transform: uppercase;
-        color: var(--rust);
-        font-family: 'Jost', sans-serif;
-        font-weight: 300;
-        padding: 0;
-        border-bottom: 1px solid transparent;
-        transition: border-color 0.2s;
-    }
-
-    .action-links .delete-btn:hover { border-color: var(--rust); }
-
-    .admin-table .empty-row td {
-        text-align: center;
-        padding: 4rem;
-        color: #9a8e84;
-        font-style: italic;
-    }
-
-    @media (max-width: 640px) {
-        .admin-table thead { display: none; }
-        .admin-table tr { display: block; padding: 1rem 0; border-bottom: 1px solid rgba(26,22,18,0.1); }
-        .admin-table td { display: block; padding: 0.3rem 0; border: none; }
-        .admin-table .title-cell { flex-direction: column; align-items: flex-start; }
-    }
-</style>
-@endpush
-
-@section('content')
-
-    <div class="admin-wrapper">
-        <div class="admin-header">
+<x-admin-layout>
+    <x-slot name="header">
+        <div class="flex items-center justify-between">
             <div>
-                <p style="font-size:0.65rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);margin-bottom:0.3rem;">✦ Admin Panel</p>
-                <h1>Recipes</h1>
+                <h2 class="font-semibold text-xl text-gray-800 leading-tight">Recipes</h2>
+                <p class="text-sm text-gray-500">Manage your culinary creations</p>
             </div>
-            <a href="{{ route('admin.recipes.create') }}" class="btn-gold">+ New Recipe</a>
+            <a href="{{ route('admin.recipes.create') }}" class="inline-flex items-center px-4 py-2 bg-amber-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-amber-700 active:bg-amber-900 focus:outline-none focus:border-amber-900 focus:ring ring-amber-300 disabled:opacity-25 transition ease-in-out duration-150">
+                + New Recipe
+            </a>
         </div>
+    </x-slot>
 
-        <table class="admin-table">
-            <thead>
-                <tr>
-                    <th style="width:50%;">Title</th>
-                    <th>Published</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse($recipes as $recipe)
-                    <tr>
-                        <td>
-                            <div class="title-cell">
-                                @if($recipe->image)
-                                    <img
-                                        src="{{ asset('storage/' . $recipe->image) }}"
-                                        alt="{{ $recipe->title }}"
-                                        class="recipe-thumb"
-                                    >
-                                @endif
-                                <span class="recipe-title">{{ $recipe->title }}</span>
-                            </div>
-                        </td>
-                        <td style="color:#9a8e84;font-size:0.82rem;">{{ $recipe->created_at->format('d M Y') }}</td>
-                        <td>
-                            <div class="action-links">
-                                <a href="{{ route('recipes.show', $recipe->slug) }}" target="_blank">View</a>
-                                <a href="{{ route('admin.recipes.edit', $recipe->id) }}">Edit</a>
-                                <form action="{{ route('admin.recipes.destroy', $recipe->id) }}" method="POST" onsubmit="return confirm('Delete this recipe permanently?')">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="delete-btn">Delete</button>
-                                </form>
-                            </div>
-                        </td>
-                    </tr>
-                @empty
-                    <tr class="empty-row">
-                        <td colspan="3">No recipes yet. <a href="{{ route('admin.recipes.create') }}" style="color:var(--gold);">Create the first one →</a></td>
-                    </tr>
-                @endforelse
-            </tbody>
-        </table>
-
-        @if($recipes->hasPages())
-            <div style="margin-top:3rem;display:flex;gap:0.5rem;justify-content:flex-end;">
-                @if($recipes->onFirstPage())
-                    <span class="btn-primary" style="opacity:0.3;cursor:default;">‹</span>
-                @else
-                    <a href="{{ $recipes->previousPageUrl() }}" class="btn-primary">‹</a>
-                @endif
-
-                @foreach($recipes->getUrlRange(1, $recipes->lastPage()) as $page => $url)
-                    @if($page == $recipes->currentPage())
-                        <span class="btn-primary" style="background:var(--ink);color:var(--cream);">{{ $page }}</span>
-                    @else
-                        <a href="{{ $url }}" class="btn-primary">{{ $page }}</a>
+    <div class="py-8">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-800">
+                    @if(session('success'))
+                        <div class="mb-4 text-sm text-green-700 bg-green-50 border border-green-200 px-3 py-2 rounded">
+                            {{ session('success') }}
+                        </div>
                     @endif
-                @endforeach
 
-                @if($recipes->hasMorePages())
-                    <a href="{{ $recipes->nextPageUrl() }}" class="btn-primary">›</a>
-                @else
-                    <span class="btn-primary" style="opacity:0.3;cursor:default;">›</span>
-                @endif
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full text-sm text-left">
+                            <thead>
+                                <tr class="text-gray-500 uppercase text-xs">
+                                    <th class="py-3 pr-4">Image</th>
+                                    <th class="py-3 pr-4">Title</th>
+                                    <th class="py-3 pr-4">Status</th>
+                                    <th class="py-3 pr-4">Created</th>
+                                    <th class="py-3 text-right">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-100">
+                                @forelse($recipes as $recipe)
+                                    <tr>
+                                        <td class="py-3 pr-4">
+                                            @if($recipe->image)
+                                                <img src="{{ asset('storage/' . $recipe->image) }}" alt="{{ $recipe->title }}" class="w-16 h-12 object-cover rounded shadow-sm">
+                                            @else
+                                                <div class="w-16 h-12 bg-gray-100 flex items-center justify-center rounded text-gray-400">
+                                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                                    </svg>
+                                                </div>
+                                            @endif
+                                        </td>
+                                        <td class="py-3 pr-4 font-medium text-gray-900">{{ $recipe->title }}</td>
+                                        <td class="py-3 pr-4">
+                                            @if($recipe->is_published)
+                                                <span class="px-2 py-1 text-xs font-semibold leading-tight text-green-700 bg-green-100 rounded-full">Published</span>
+                                            @else
+                                                <span class="px-2 py-1 text-xs font-semibold leading-tight text-gray-700 bg-gray-100 rounded-full">Draft</span>
+                                            @endif
+                                        </td>
+                                        <td class="py-3 pr-4 text-gray-500">{{ $recipe->created_at->format('d M Y') }}</td>
+                                        <td class="py-3 text-right">
+                                            <div class="flex justify-end space-x-3 items-center">
+                                                <a href="{{ route('recipes.show', $recipe->slug) }}" target="_blank" class="text-amber-700 hover:text-amber-900">View</a>
+                                                <a href="{{ route('admin.recipes.edit', $recipe) }}" class="text-blue-600 hover:text-blue-900">Edit</a>
+                                                
+                                                <form action="{{ route('admin.recipes.toggle-publish', $recipe) }}" method="POST" class="inline">
+                                                    @csrf
+                                                    @method('PATCH')
+                                                    <button type="submit" class="{{ $recipe->is_published ? 'text-orange-600 hover:text-orange-900' : 'text-green-600 hover:text-green-900' }}">
+                                                        {{ $recipe->is_published ? 'Unpublish' : 'Publish' }}
+                                                    </button>
+                                                </form>
+
+                                                <form action="{{ route('admin.recipes.destroy', $recipe) }}" method="POST" class="inline">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="text-red-600 hover:text-red-900" onclick="return confirm('Permanently delete this recipe?')">Delete</button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td class="py-8 text-center text-gray-500" colspan="5">
+                                            <div class="flex flex-col items-center">
+                                                <svg class="w-12 h-12 text-gray-300 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                                </svg>
+                                                <p>No recipes found.</p>
+                                                <a href="{{ route('admin.recipes.create') }}" class="mt-2 text-amber-600 hover:underline">Create your first recipe →</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="mt-6">
+                        {{ $recipes->links() }}
+                    </div>
+                </div>
             </div>
-        @endif
+        </div>
     </div>
-
-@endsection
+</x-admin-layout>

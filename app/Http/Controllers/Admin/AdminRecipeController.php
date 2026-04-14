@@ -40,8 +40,12 @@ class AdminRecipeController extends Controller
             'ingredients'  => 'required|string',
             'instructions' => 'required|string',
             'image'        => 'nullable|image|max:2048',
+            'images'       => 'nullable|array',
+            'images.*'     => 'nullable|image|max:2048',
+            'is_published' => 'nullable|boolean',
         ]);
 
+        $validated['is_published'] = $request->has('is_published');
         $validated['slug'] = Str::slug($validated['title']);
         
         // Ensure slug is unique
@@ -55,7 +59,8 @@ class AdminRecipeController extends Controller
             $validated['image'] = $request->file('image')->store('recipes', 'public');
         }
 
-        Recipe::create($validated);
+        $recipe = Recipe::create($validated);
+        $recipe->addMediaFiles($request->file('images', []));
 
         return redirect()->route('admin.recipes.index')->with('success', 'Recipe created successfully.');
     }
@@ -79,7 +84,12 @@ class AdminRecipeController extends Controller
             'ingredients'  => 'required|string',
             'instructions' => 'required|string',
             'image'        => 'nullable|image|max:2048',
+            'images'       => 'nullable|array',
+            'images.*'     => 'nullable|image|max:2048',
+            'is_published' => 'nullable|boolean',
         ]);
+
+        $validated['is_published'] = $request->has('is_published');
 
         if ($validated['title'] !== $recipe->title) {
             $validated['slug'] = Str::slug($validated['title']);
@@ -101,6 +111,7 @@ class AdminRecipeController extends Controller
         }
 
         $recipe->update($validated);
+        $recipe->addMediaFiles($request->file('images', []));
 
         return redirect()->route('admin.recipes.index')->with('success', 'Recipe updated successfully.');
     }
@@ -117,5 +128,18 @@ class AdminRecipeController extends Controller
         $recipe->delete();
 
         return redirect()->route('admin.recipes.index')->with('success', 'Recipe deleted successfully.');
+    }
+
+    /**
+     * Toggle the published status of the recipe.
+     */
+    public function togglePublish(Recipe $recipe): RedirectResponse
+    {
+        $recipe->update([
+            'is_published' => !$recipe->is_published
+        ]);
+
+        $status = $recipe->is_published ? 'published' : 'unpublished';
+        return redirect()->back()->with('success', "Recipe {$status} successfully.");
     }
 }

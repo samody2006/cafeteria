@@ -221,8 +221,9 @@
 
     {{-- Navigation --}}
     <header class="site-nav">
-        <a href="{{ route('home') }}" class="nav-logo">
-            God's Own <span>Cafeteria</span>
+        <a href="{{ route('home') }}" class="flex items-center gap-3 group">
+            <img src="{{ asset('images/logo.png') }}" alt="Logo" class="h-12 w-auto transition-transform group-hover:scale-105">
+            <span class="nav-logo hidden sm:inline-block">God's Own <span>Cafeteria</span></span>
         </a>
 
         <ul class="nav-links" id="navLinks">
@@ -250,7 +251,10 @@
     </main>
 
     <footer class="site-footer">
-        <div class="footer-logo">God's Own Cafeteria</div>
+        <div class="flex flex-col items-center">
+            <img src="{{ asset('images/logo.png') }}" alt="Logo" class="h-16 w-auto mb-4 brightness-0 invert opacity-80">
+            <div class="footer-logo">God's Own Cafeteria</div>
+        </div>
         <div class="footer-divider"></div>
         <nav>
             <a href="{{ route('home') }}">Home</a>

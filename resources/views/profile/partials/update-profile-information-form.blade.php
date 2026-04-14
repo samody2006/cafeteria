@@ -13,9 +13,55 @@
         @csrf
     </form>
 
-    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6">
+    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6" enctype="multipart/form-data">
         @csrf
         @method('patch')
+
+        <!-- Profile Image Upload -->
+        <div>
+            <x-input-label for="profile_image" :value="__('Profile Image')" />
+
+            <div class="mt-4 flex items-center gap-6">
+                <!-- Current Image Preview -->
+                <div class="flex-shrink-0">
+                    <div class="w-24 h-24 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center font-semibold text-2xl overflow-hidden">
+                        @if($user->profile_image)
+                            <img src="{{ $user->getProfileImageUrl() }}"
+                                 alt="{{ $user->name }}"
+                                 class="w-full h-full object-cover">
+                        @else
+                            {{ $user->getInitials() }}
+                        @endif
+                    </div>
+                </div>
+
+                <!-- Upload Input -->
+                <div class="flex-1">
+                    <input id="profile_image"
+                           name="profile_image"
+                           type="file"
+                           class="block w-full text-sm text-gray-500
+                                  file:me-4 file:py-2 file:px-4
+                                  file:rounded-md file:border-0
+                                  file:text-sm file:font-semibold
+                                  file:bg-amber-600 file:text-white
+                                  hover:file:bg-amber-700
+                                  file:cursor-pointer"
+                           accept="image/*"
+                           onchange="previewImage(event)" />
+                    <p class="mt-2 text-sm text-gray-500">
+                        {{ __('JPG, PNG, GIF. Max size 2MB.') }}
+                    </p>
+                    <x-input-error class="mt-2" :messages="$errors->get('profile_image')" />
+                </div>
+            </div>
+
+            <!-- Image Preview on Change -->
+            <div id="preview-container" class="mt-4" style="display: none;">
+                <p class="text-sm text-gray-600 mb-2">{{ __('Preview') }}:</p>
+                <img id="preview-image" src="" alt="Preview" class="max-w-xs rounded-lg shadow">
+            </div>
+        </div>
 
         <div>
             <x-input-label for="name" :value="__('Name')" />
@@ -62,3 +108,22 @@
         </div>
     </form>
 </section>
+
+<script>
+    function previewImage(event) {
+        const file = event.target.files[0];
+        const previewContainer = document.getElementById('preview-container');
+        const previewImage = document.getElementById('preview-image');
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                previewImage.src = e.target.result;
+                previewContainer.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        } else {
+            previewContainer.style.display = 'none';
+        }
+    }
+</script>

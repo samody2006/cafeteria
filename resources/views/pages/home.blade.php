@@ -33,10 +33,10 @@
         position: absolute;
         inset: 0;
         background: linear-gradient(
-            to top,
-            rgba(26,22,18,0.88) 0%,
-            rgba(26,22,18,0.3) 55%,
-            transparent 100%
+            135deg,
+            rgba(26,22,18,0.95) 0%,
+            rgba(26,22,18,0.65) 35%,
+            rgba(184,148,58,0.08) 100%
         );
     }
 
@@ -44,40 +44,42 @@
         position: relative;
         z-index: 2;
         padding: 4rem 6vw 5rem;
-        max-width: 780px;
+        max-width: 820px;
         opacity: 0;
-        animation: fadeUp 1s 0.4s ease forwards;
+        animation: fadeUp 1.2s 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
     }
 
     @keyframes fadeUp {
-        from { opacity: 0; transform: translateY(24px); }
+        from { opacity: 0; transform: translateY(40px); }
         to   { opacity: 1; transform: translateY(0); }
     }
 
     .hero-eyebrow {
-        font-size: 0.68rem;
-        letter-spacing: 0.3em;
+        font-size: 0.65rem;
+        letter-spacing: 0.35em;
         text-transform: uppercase;
         color: var(--gold);
-        margin-bottom: 1rem;
+        margin-bottom: 1.2rem;
+        font-weight: 500;
     }
 
     .hero-title {
         font-family: 'Cormorant Garamond', serif;
-        font-size: clamp(3rem, 7vw, 6rem);
-        font-weight: 300;
-        line-height: 1.05;
+        font-size: clamp(3.2rem, 8vw, 6.5rem);
+        font-weight: 400;
+        line-height: 1.08;
         color: var(--cream);
-        margin-bottom: 1.5rem;
+        margin-bottom: 1.8rem;
+        letter-spacing: -0.02em;
     }
 
-    .hero-title em { font-style: italic; color: var(--gold); }
+    .hero-title em { font-style: italic; color: var(--gold); font-weight: 300; }
 
     .hero-sub {
-        color: rgba(245,240,232,0.65);
-        font-size: 0.95rem;
+        color: rgba(245,240,232,0.7);
+        font-size: 1rem;
         line-height: 1.8;
-        max-width: 480px;
+        max-width: 520px;
         margin-bottom: 2.5rem;
     }
 
@@ -460,8 +462,9 @@
         <div class="recipes-grid">
             @forelse($recipes as $recipe)
                 <div class="recipe-card">
+                    @php $cover = $recipe->coverImagePath(); @endphp
                     <img
-                        src="{{ $recipe->image ? asset('storage/' . $recipe->image) : asset('images/placeholder.jpg') }}"
+                        src="{{ $cover ? asset('storage/' . $cover) : asset('images/placeholder.jpg') }}"
                         alt="{{ $recipe->title }}"
                         class="recipe-card-img"
                         loading="lazy"
@@ -483,6 +486,7 @@
 
     {{-- ── Pull Quote ────────────────────────────────────────── --}}
     <div class="quote-section">
+        <img src="{{ asset('images/logo.png') }}" alt="Logo" class="h-12 w-auto mx-auto mb-8 opacity-40">
         <p class="pull-quote">
             Cooking is not just feeding the body — it is an act of love, of memory, of pure human expression.
         </p>
