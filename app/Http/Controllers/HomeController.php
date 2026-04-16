@@ -14,7 +14,8 @@ class HomeController extends Controller
     {
         $recipes = Recipe::latest()->take(3)->get();
         $galleryImages = Gallery::latest()->take(5)->get();
-        return view('pages.home', compact('recipes', 'galleryImages'));
+        $contact = ContactInfo::first();
+        return view('pages.home', compact('recipes', 'galleryImages', 'contact'));
     }
 
     public function about(): View

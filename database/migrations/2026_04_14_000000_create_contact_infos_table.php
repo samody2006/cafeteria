@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('instagram_url')->nullable();
             $table->string('facebook_url')->nullable();
             $table->string('twitter_url')->nullable();
+            $table->string('tiktok_url')->nullable();
             $table->timestamps();
         });
 
@@ -29,6 +30,7 @@ return new class extends Migration
             'instagram_url' => null,
             'facebook_url' => null,
             'twitter_url' => null,
+            'tiktok_url' => null,
             'created_at' => now(),
             'updated_at' => now(),
         ]);

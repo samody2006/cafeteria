@@ -364,11 +364,32 @@
             >
             <p class="bio-portrait-caption">Chef & Author</p>
             <div class="social-row">
-                <a class="social-chip" href="mailto:{{ optional($contact)->email ?? 'Eastheromoh@gmail.com' }}" aria-label="Email">✉️</a>
-                <a class="social-chip" href="tel:{{ optional($contact)->phone_primary ?? '07083415288' }}" aria-label="Call">📞</a>
-                @if($contact?->instagram_url)<a class="social-chip" href="{{ $contact->instagram_url }}" target="_blank" aria-label="Instagram">IG</a>@endif
-                @if($contact?->facebook_url)<a class="social-chip" href="{{ $contact->facebook_url }}" target="_blank" aria-label="Facebook">Fb</a>@endif
-                @if($contact?->twitter_url)<a class="social-chip" href="{{ $contact->twitter_url }}" target="_blank" aria-label="Twitter">X</a>@endif
+                <a class="social-chip" href="mailto:{{ optional($contact)->email ?? 'Eastheromoh@gmail.com' }}" aria-label="Email">
+                    <i class="fas fa-envelope"></i>
+                </a>
+                <a class="social-chip" href="tel:{{ optional($contact)->phone_primary ?? '07083415288' }}" aria-label="Call">
+                    <i class="fas fa-phone"></i>
+                </a>
+                @if($contact?->instagram_url)
+                    <a class="social-chip" href="{{ $contact->instagram_url }}" target="_blank" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                @endif
+                @if($contact?->facebook_url)
+                    <a class="social-chip" href="{{ $contact->facebook_url }}" target="_blank" aria-label="Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                @endif
+                @if($contact?->twitter_url)
+                    <a class="social-chip" href="{{ $contact->twitter_url }}" target="_blank" aria-label="Twitter">
+                        <i class="fab fa-x-twitter"></i>
+                    </a>
+                @endif
+                @if($contact?->tiktok_url)
+                    <a class="social-chip" href="{{ $contact->tiktok_url }}" target="_blank" aria-label="TikTok">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+                @endif
             </div>
         </div>
 

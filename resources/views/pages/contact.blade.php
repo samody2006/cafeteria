@@ -259,15 +259,26 @@
                 @endif
                 <div class="contact-item" style="gap:0.6rem;">
                     @if($contact?->instagram_url)
-                        <a class="contact-icon" href="{{ $contact->instagram_url }}" aria-label="Instagram" target="_blank">IG</a>
+                        <a class="contact-icon" href="{{ $contact->instagram_url }}" aria-label="Instagram" target="_blank">
+                            <i class="fab fa-instagram"></i>
+                        </a>
                     @endif
                     @if($contact?->facebook_url)
-                        <a class="contact-icon" href="{{ $contact->facebook_url }}" aria-label="Facebook" target="_blank">Fb</a>
+                        <a class="contact-icon" href="{{ $contact->facebook_url }}" aria-label="Facebook" target="_blank">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
                     @endif
                     @if($contact?->twitter_url)
-                        <a class="contact-icon" href="{{ $contact->twitter_url }}" aria-label="Twitter" target="_blank">X</a>
+                        <a class="contact-icon" href="{{ $contact->twitter_url }}" aria-label="Twitter" target="_blank">
+                            <i class="fab fa-x-twitter"></i>
+                        </a>
                     @endif
-                    @if(!($contact?->instagram_url || $contact?->facebook_url || $contact?->twitter_url))
+                    @if($contact?->tiktok_url)
+                        <a class="contact-icon" href="{{ $contact->tiktok_url }}" aria-label="TikTok" target="_blank">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                    @endif
+                    @if(!($contact?->instagram_url || $contact?->facebook_url || $contact?->twitter_url || $contact?->tiktok_url))
                         <span class="text-sm text-gray-500">Add social links in dashboard → Contact</span>
                     @endif
                 </div>

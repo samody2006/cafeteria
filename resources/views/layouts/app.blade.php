@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="{{ asset('images/favicon.ico') }}">
     <title>@yield('title', config('app.name', 'God\'s Own Cafeteria'))</title>
     <meta name="description" content="@yield('meta_description', 'Artisanal recipes, culinary stories, and fine dining by God\'s Own Cafeteria.')">
 
     {{-- Fonts --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
@@ -177,6 +179,15 @@
             transition: background 0.25s;
         }
         .btn-gold:hover { background: #9a7b2e; border-color: #9a7b2e; }
+        .social-chip i {
+            color: var(--gold);
+            font-size: 1rem; /* adjust size if needed */
+            transition: color 0.2s;
+        }
+
+        .social-chip:hover i {
+            color: var(--ink);
+        }
 
         /* Footer */
         .site-footer {
@@ -212,6 +223,17 @@
             width: 60px; height: 1px;
             background: var(--gold);
             margin: 1.5rem auto;
+        }
+        .footer-social {
+            color: var(--gold);
+            font-size: 3rem;
+            opacity: 0.8;
+            transition: opacity 0.2s, color 0.2s;
+        }
+
+        .footer-social:hover {
+            color: var(--warm);
+            opacity: 1;
         }
     </style>
 
@@ -252,7 +274,7 @@
 
     <footer class="site-footer">
         <div class="flex flex-col items-center">
-            <img src="{{ asset('images/logo.png') }}" alt="Logo" class="h-16 w-auto mb-4 brightness-0 invert opacity-80">
+            <img src="{{ asset('images/logo.png') }}" alt="Logo" class="h-16 w-auto mb-4 opacity-80">
             <div class="footer-logo">God's Own Cafeteria</div>
         </div>
         <div class="footer-divider"></div>
@@ -263,6 +285,38 @@
             <a href="{{ route('about') }}">About</a>
             <a href="{{ route('contact') }}">Contact</a>
         </nav>
+        <div class="footer-divider"></div>
+
+        {{-- Social Icons --}}
+        <div class="flex justify-center gap-6 my-2">
+            <a href="mailto:{{ optional($contact)->email ?? 'Eastheromoh@gmail.com' }}" aria-label="Email" class="footer-social">
+                <i class="fas fa-envelope"></i>
+            </a>
+            <a href="tel:{{ optional($contact)->phone_primary ?? '07083415288' }}" aria-label="Call" class="footer-social">
+                <i class="fas fa-phone"></i>
+            </a>
+            @if($contact?->instagram_url)
+                <a href="{{ $contact->instagram_url }}" aria-label="Instagram" target="_blank" class="footer-social">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            @endif
+            @if($contact?->facebook_url)
+                <a href="{{ $contact->facebook_url }}" aria-label="Facebook" target="_blank" class="footer-social">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+            @endif
+            @if($contact?->twitter_url)
+                <a href="{{ $contact->twitter_url }}" aria-label="Twitter" target="_blank" class="footer-social">
+                    <i class="fab fa-x-twitter"></i>
+                </a>
+            @endif
+            @if($contact?->tiktok_url)
+                <a href="{{ $contact->tiktok_url }}" aria-label="TikTok" target="_blank" class="footer-social">
+                    <i class="fab fa-tiktok"></i>
+                </a>
+            @endif
+        </div>
+
         <p class="copyright">&copy; {{ date('Y') }} God's Own Cafeteria. All rights reserved.</p>
     </footer>
 
