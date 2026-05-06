@@ -2,7 +2,7 @@
                              <div class="px-6 py-4 flex justify-between items-center">
                                  <!-- Logo/Branding -->
                                  <div class="flex items-center gap-3">
-                                     <a href="{{ route('dashboard') }}" class="flex items-center gap-2 group">
+                                     <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-2 group">
                                          <img src="{{ asset('images/logo.png') }}" alt="Logo" class="h-10 w-auto">
                                          <span class="text-xl font-bold text-gray-800 tracking-tight group-hover:text-amber-600 transition-colors">
                                              Dashboard
@@ -104,7 +104,7 @@
                                                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
                                                  Edit Profile
                                              </a>
-                                             <form method="POST" action="{{ route('logout') }}" class="border-t border-gray-200">
+                                             <form method="POST" action="{{ route('admin.logout') }}" class="border-t border-gray-200">
                                                  @csrf
                                                  <button type="submit"
                                                          class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors">

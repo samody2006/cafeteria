@@ -6,8 +6,8 @@
             <!-- Sidebar Content -->
             <nav class="px-4 py-8">
                 <!-- Dashboard -->
-                <a href="{{ route('dashboard') }}"
-                   class="flex items-center gap-4 px-4 py-3 rounded-lg mb-2 transition-colors {{ request()->routeIs('dashboard') ? 'bg-amber-600 text-white' : 'text-gray-400 hover:bg-gray-800' }}">
+                <a href="{{ route('admin.dashboard') }}"
+                   class="flex items-center gap-4 px-4 py-3 rounded-lg mb-2 transition-colors {{ request()->routeIs('admin.dashboard') ? 'bg-amber-600 text-white' : 'text-gray-400 hover:bg-gray-800' }}">
                     <svg class="w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-3m0 0l7-4 7 4M5 9v10a1 1 0 001 1h12a1 1 0 001-1V9m-9 11v-5m0 0v-5m9 5v-5"></path>
                     </svg>

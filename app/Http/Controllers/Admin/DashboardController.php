@@ -12,7 +12,7 @@
                     $unreadMessagesCount = ContactMessage::whereNull('read_at')->count();
                     $recentMessages = ContactMessage::latest()->take(5)->get();
 
-                    return view('dashboard', [
+                    return view('admin.dashboard', [
                         'unreadMessagesCount' => $unreadMessagesCount,
                         'recentMessages' => $recentMessages,
                     ]);
